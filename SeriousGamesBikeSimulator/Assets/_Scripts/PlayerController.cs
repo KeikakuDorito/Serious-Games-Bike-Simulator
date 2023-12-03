@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody rb;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -39,8 +38,7 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerMovement()
     {
-        moveDirection = orientation.forward * yInput + orientation.right * xInput;
-
-        rb.AddForce(moveDirection.normalized * movementSpeed * 10f, ForceMode.Force);
+        transform.Translate(orientation.right * Time.deltaTime * xInput * movementSpeed, Space.Self);
+        transform.Translate(orientation.forward * Time.deltaTime * yInput * movementSpeed, Space.Self);
     }
 }

@@ -33,6 +33,7 @@ public class BrakeTest : MonoBehaviour
                 {
                     brakeOff.SetActive(false);
                     brakeOn.SetActive(true);
+                    BikePrepManager.instance.brakesChecked = true;
                 }
                 else
                 {

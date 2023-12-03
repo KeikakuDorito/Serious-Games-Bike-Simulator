@@ -53,6 +53,7 @@ public class HelmtedtoHead : MonoBehaviour
                     gameObject.transform.position = head.position + (head.up * 0.4f) + (head.forward * 0.6f);
                     gameObject.transform.parent = head;
                     sphereCollider.enabled = false;
+                    BikePrepManager.instance.helmetWorn = true;
                 }
             }
         }

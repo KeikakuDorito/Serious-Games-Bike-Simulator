@@ -5,11 +5,12 @@ using UnityEngine;
 public class ChainCollide : MonoBehaviour
 {
     public bool collided;
-
+    public GameObject chain;
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.name == "Normal Chain")
+        Debug.Log(other.gameObject.name);
+        if(other.gameObject == chain)
         {
             collided = true;
         }

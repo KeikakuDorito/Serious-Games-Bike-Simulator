@@ -85,15 +85,16 @@ public class CarryObject : MonoBehaviour
             if (Input.GetMouseButtonUp(0))
             {
                 cleanChain.transform.parent = null;
-                chainIndicator.SetActive(false);
 
                 if (hitbox.GetComponent<ChainCollide>().collided == true && rustedRemoved == true)//you let go of the object and it's colliding, then 
                 {
+                    
                     cleanChain.transform.position = chainIndicator.transform.position;
                     cleanChain.transform.rotation = chainIndicator.transform.rotation;
                     completed = true;
+                    BikePrepManager.instance.chainReplaced = true;
                 }
-
+                chainIndicator.SetActive(false);
                 carryingClean = false;
             }
         }

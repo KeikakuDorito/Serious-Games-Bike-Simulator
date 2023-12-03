@@ -53,6 +53,7 @@ public class PumpBike : MonoBehaviour
                 {
                     Wheel.SetActive(false);
                     InflatedWheel.SetActive(true);
+                    BikePrepManager.instance.tiresPumped = true;
                 }
             }
         }
