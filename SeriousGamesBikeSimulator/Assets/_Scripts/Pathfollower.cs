@@ -23,31 +23,32 @@ public class Pathfollower : MonoBehaviour
 
     void CheckNode()
     {
-        if(Node.Instance == null)
+        if(PathNode[CurrentNode].GetComponent<Node>() == null)
         {
             Debug.LogError("Node is null");
         }
-        if (Node.Instance.hasQuiz)
-        {
 
+        if (PathNode[CurrentNode].GetComponent<Node>().hasQuiz)
+        {
+            Debug.Log("has quiz");
         }
         else
         {
 
             Debug.Log("IT runs");
-            if (Node.Instance.GoesRight == true)
+            if (PathNode[CurrentNode].GetComponent<Node>().GoesRight == true)
             {
                 Player.transform.eulerAngles = new Vector3(0, 90, 0);
                 Debug.Log("Rotated");
                 Debug.Log("Current Node: " + CurrentNode);
-                Node.Instance.GoesRight = false;
+                PathNode[CurrentNode].GetComponent<Node>().GoesRight = false;
             }
             
-            if (Node.Instance.GoesLeft)
+            if (PathNode[CurrentNode].GetComponent<Node>().GoesLeft)
             {
                 Player.transform.Rotate(0, -90, 0);
                 Debug.Log("Rotated");
-                Node.Instance.GoesLeft = false;
+                PathNode[CurrentNode].GetComponent<Node>().GoesLeft = false;
             }
             Timer = 0;
 
@@ -76,7 +77,7 @@ public class Pathfollower : MonoBehaviour
         }
         else
         {
-            if (CurrentNode < PathNode.Length - 1 && !Node.Instance.hasQuiz)
+            if (CurrentNode < PathNode.Length - 1 && !PathNode[CurrentNode].GetComponent<Node>().hasQuiz)
             {
                
                 CurrentNode++;
