@@ -12,8 +12,9 @@ public class Node : MonoBehaviour
 
 
     public bool hasQuiz;
-    public bool GoesRight = true;
+    public bool GoesRight;
     public bool GoesLeft;
+    public bool ThrowNewspaper;
     public int CorrectAnswer;
     public int ChoiceMade;
     private void Awake()

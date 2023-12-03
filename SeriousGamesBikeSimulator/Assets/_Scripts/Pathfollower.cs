@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class Pathfollower : MonoBehaviour
     float Timer;
     Vector3 CurrentPositionHolder;
     public int CurrentNode;
-
+    public Camera cam;
 
 
     // Start is called before the first frame update
@@ -86,9 +87,32 @@ public class Pathfollower : MonoBehaviour
                     if (PathNode[CurrentNode].GetComponent<Node>().ChoiceMade == PathNode[CurrentNode].GetComponent<Node>().CorrectAnswer)
                     {
                         PathNode[CurrentNode].transform.GetChild(0).gameObject.SetActive(false);
-                        PathNode[CurrentNode].GetComponent<Node>().hasQuiz = false;
-                        CurrentNode++;
-                        CheckNode();
+                        
+
+
+                        if (PathNode[CurrentNode].GetComponent<Node>().ThrowNewspaper)
+                        {
+                            PathNode[CurrentNode].transform.GetChild(1).gameObject.SetActive(true);
+                            cam.transform.LookAt(PathNode[CurrentNode].transform.GetChild(1));
+
+                            if (Input.GetMouseButtonDown(0))
+                            {
+                                PathNode[CurrentNode].transform.GetChild(1).GetComponent<Rigidbody>().velocity = PathNode[CurrentNode].transform.GetChild(1).transform.up * 25;
+
+                                Coroutine coroutine = StartCoroutine(WaitForNewspaper());
+                                PathNode[CurrentNode].ThrowNewspaper = false;
+                                cam.transform.LookAt(PathNode[CurrentNode + 1].transform);
+                            }
+
+
+                        }
+
+                        if (!PathNode[CurrentNode].GetComponent<Node>().ThrowNewspaper)
+                        {
+                            PathNode[CurrentNode].GetComponent<Node>().hasQuiz = false;
+                            CurrentNode++;
+                            CheckNode();
+                        }
 
                     }
 
@@ -102,8 +126,28 @@ public class Pathfollower : MonoBehaviour
                 }
                 else
                 {
-                    CurrentNode++;
-                    CheckNode();
+                    if (PathNode[CurrentNode].GetComponent<Node>().ThrowNewspaper)
+                    {
+                        PathNode[CurrentNode].transform.GetChild(0).gameObject.SetActive(true);
+                        cam.transform.LookAt(PathNode[CurrentNode].transform.GetChild(0));
+
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            PathNode[CurrentNode].transform.GetChild(0).GetComponent<Rigidbody>().velocity = PathNode[CurrentNode].transform.GetChild(0).transform.forward * 50;
+
+                            Coroutine coroutine = StartCoroutine(WaitForNewspaper());
+                            PathNode[CurrentNode].ThrowNewspaper = false;
+                            cam.transform.LookAt(PathNode[CurrentNode+1].transform);
+                        }
+
+
+                    }
+
+                    if (!PathNode[CurrentNode].GetComponent<Node>().ThrowNewspaper && !PathNode[CurrentNode].GetComponent<Node>().hasQuiz)
+                    {
+                        CurrentNode++;
+                        CheckNode();
+                    }
                 }
 
 
@@ -112,4 +156,9 @@ public class Pathfollower : MonoBehaviour
         }
     }
 
+    IEnumerator WaitForNewspaper()
+    {
+
+        yield return new WaitForSeconds(15f);
+    }
 }
