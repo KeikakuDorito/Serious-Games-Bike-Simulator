@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PumpBike : MonoBehaviour
+public class BrakeTest : MonoBehaviour
 {
-    // Start is called before the first frame update
 
-    public GameObject Wheel;
-    public GameObject InflatedWheel;
-    public GameObject SelectedObject;
+    public GameObject brakeOn;
+    public GameObject brakeOff;
     Camera cam;
     [SerializeField]
     private float distance = 3f;
@@ -21,27 +19,9 @@ public class PumpBike : MonoBehaviour
     }
 
 
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        SelectedObject = gameObject;
-    //    }
-    //}
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        SelectedObject = null;
-    //    }
-    //}
-
     // Update is called once per frame
     void Update()
     {
-
         Ray ray = new Ray(cam.transform.position, cam.transform.forward);
         Debug.DrawRay(ray.origin, ray.direction * distance);
         RaycastHit hitInfo;
@@ -49,12 +29,22 @@ public class PumpBike : MonoBehaviour
         {
             if (hitInfo.collider.gameObject == gameObject)
             {
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButton(0))
                 {
-                    Wheel.SetActive(false);
-                    InflatedWheel.SetActive(true);
+                    brakeOff.SetActive(false);
+                    brakeOn.SetActive(true);
+                }
+                else
+                {
+                    brakeOn.SetActive(false);
+                    brakeOff.SetActive(true);
                 }
             }
+        }
+        else
+        {
+            brakeOn.SetActive(false);
+            brakeOff.SetActive(true);
         }
     }
 }

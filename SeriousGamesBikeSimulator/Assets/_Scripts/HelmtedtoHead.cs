@@ -13,10 +13,12 @@ public class HelmtedtoHead : MonoBehaviour
     private float distance = 3f;
     [SerializeField]
     private LayerMask hitMask;
+    private Collider sphereCollider;
 
     void Start()
     {
         cam = Camera.main;
+        sphereCollider = GetComponent<SphereCollider>();
     }
 
     //private void OnTriggerEnter(Collider other)
@@ -44,10 +46,14 @@ public class HelmtedtoHead : MonoBehaviour
         RaycastHit hitInfo;
         if (Physics.Raycast(ray, out hitInfo, distance, hitMask))
         {
-            if (Input.GetMouseButtonDown(0))
+            if (hitInfo.collider.gameObject == gameObject)
             {
-                gameObject.transform.position = head.position + (head.up * 0.4f) + (head.forward * 0.6f);
-                gameObject.transform.parent = head;
+                if (Input.GetMouseButtonDown(0))
+                {
+                    gameObject.transform.position = head.position + (head.up * 0.4f) + (head.forward * 0.6f);
+                    gameObject.transform.parent = head;
+                    sphereCollider.enabled = false;
+                }
             }
         }
     }
