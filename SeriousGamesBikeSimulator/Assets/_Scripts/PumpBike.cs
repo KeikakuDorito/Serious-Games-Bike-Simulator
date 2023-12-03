@@ -9,31 +9,49 @@ public class PumpBike : MonoBehaviour
     public GameObject Wheel;
     public GameObject InflatedWheel;
     public GameObject SelectedObject;
+    Camera cam;
+    [SerializeField]
+    private float distance = 3f;
+    [SerializeField]
+    private LayerMask hitMask;
 
-
-    private void OnTriggerEnter(Collider other)
+    void Start()
     {
-        if (other.CompareTag("Player"))
-        {
-            SelectedObject = gameObject;
-        }
+        cam = Camera.main;
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            SelectedObject = null;
-        }
-    }
+
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        SelectedObject = gameObject;
+    //    }
+    //}
+
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        SelectedObject = null;
+    //    }
+    //}
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0) && SelectedObject != null)
+
+        Ray ray = new Ray(cam.transform.position, cam.transform.forward);
+        Debug.DrawRay(ray.origin, ray.direction * distance);
+        RaycastHit hitInfo;
+        if (Physics.Raycast(ray, out hitInfo, distance, hitMask))
         {
-            Wheel.SetActive(false);
-            InflatedWheel.SetActive(true);
+            if (Input.GetMouseButtonDown(0))
+            {
+                Wheel.SetActive(false);
+                InflatedWheel.SetActive(true);
+            }
         }
     }
 }

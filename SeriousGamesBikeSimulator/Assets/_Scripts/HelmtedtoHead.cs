@@ -8,39 +8,47 @@ public class HelmtedtoHead : MonoBehaviour
 
     public Transform head;
     public GameObject selectedObject;
-    Camera Cam;
-    Vector3 myVector = new Vector3 (0f,0.27f,-0.81f);
-    public LayerMask mask;
+    Camera cam;
+    [SerializeField]
+    private float distance = 3f;
+    [SerializeField]
+    private LayerMask hitMask;
 
-
-
-    private void OnTriggerEnter(Collider other)
+    void Start()
     {
-       if(other.CompareTag("Player"))
-        {
-            selectedObject = gameObject;
-        }
-        
-      
+        cam = Camera.main;
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            selectedObject = null;
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //   if(other.CompareTag("Player"))
+    //    {
+    //        selectedObject = gameObject;
+    //    }
+
+
+    //}
+
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        selectedObject = null;
+    //    }
+    //}
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && selectedObject != null)
+        Ray ray = new Ray(cam.transform.position, cam.transform.forward);
+        Debug.DrawRay(ray.origin, ray.direction * distance);
+        RaycastHit hitInfo;
+        if (Physics.Raycast(ray, out hitInfo, distance, hitMask))
         {
-        
-
+            if (Input.GetMouseButtonDown(0))
+            {
                 gameObject.transform.position = head.position + (head.up * 0.4f) + (head.forward * 0.6f);
                 gameObject.transform.parent = head;
-
+            }
         }
     }
 
